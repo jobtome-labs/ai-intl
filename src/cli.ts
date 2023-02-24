@@ -33,5 +33,3 @@ const response = cli(
   },
   rawArgv
 );
-
-console.log(response);
