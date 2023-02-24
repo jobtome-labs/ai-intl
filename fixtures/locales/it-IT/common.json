@@ -1,12 +1,12 @@
 {
   "searchForm": {
     "keyword": "Professione, Azienda, Parola chiave",
-    "location": "Città, Provincia, Codice postale",
+    "location": "Città, Stato, CAP",
     "what": "Cosa",
     "where": "Dove",
-    "errorMessage": "È necessario inserire una parola o una località per avviare una ricerca",
+    "errorMessage": "È necessario inserire una parola o una posizione per avviare una ricerca",
     "noOptions": "Nessuna opzione da mostrare",
-    "searchJobs": "Cerca lavori",
+    "searchJobs": "Cerca lavoro",
     "findJobs": "Trova un lavoro",
     "editSearch": "Modifica ricerca",
     "searchSummary": "{{ jobSearch }} a {{ location }}",
@@ -14,6 +14,7 @@
     "locationOnlySearchSummary": "Lavori a {{ jobSearch }}",
     "positionOnlySearchSummary_ca": "{{ jobSearch }} in Canada",
     "emptySearchSummary": "Lavori nel Regno Unito",
-    "emptySearchSummary_ca": "Lavori in Canada"
+    "emptySearchSummary_ca": "Lavori in Canada",
+    "test": "nuovo"
   }
 }

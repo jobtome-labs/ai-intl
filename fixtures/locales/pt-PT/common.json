@@ -14,6 +14,7 @@
     "locationOnlySearchSummary": "Empregos em {{ jobSearch }}",
     "positionOnlySearchSummary_ca": "{{ jobSearch }} no Canadá",
     "emptySearchSummary": "Empregos no Reino Unido",
-    "emptySearchSummary_ca": "Empregos no Canadá"
+    "emptySearchSummary_ca": "Empregos no Canadá",
+    "test": "novo"
   }
 }
