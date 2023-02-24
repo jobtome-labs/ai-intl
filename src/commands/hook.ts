@@ -9,6 +9,8 @@ import { fileExists } from "../utils/fs.js";
 const hookName = "pre-commit";
 const symlinkPath = `.git/hooks/${hookName}`;
 
+export const isCalledFromGitHook = process.argv[1].endsWith(`/${symlinkPath}`);
+
 export default command(
   {
     name: "hook",

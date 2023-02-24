@@ -5,6 +5,7 @@ import { getConfig } from "../utils/config.js";
 import { getStagedDiff } from "./git.js";
 import path from "path";
 import { execa } from "execa";
+import { isCalledFromGitHook } from "../commands/hook.js";
 
 const { outputJson } = fsExtra;
 
@@ -120,6 +121,8 @@ export const translate = async ({
   );
 
   Promise.allSettled(translations).then(() => {
-    execa("git", ["add", "."]);
+    if (isCalledFromGitHook) {
+      execa("git", ["add", "."]);
+    }
   });
 };
