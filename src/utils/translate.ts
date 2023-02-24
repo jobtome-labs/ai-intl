@@ -3,6 +3,7 @@ import task from "tasuku";
 import fsExtra from "fs-extra";
 import { Configuration, OpenAIApi } from "openai";
 const { outputJson } = fsExtra;
+import { getConfig } from "../utils/config.js";
 
 const sanitizeMessage = (message: string) =>
   message
@@ -19,12 +20,12 @@ enum Locales {
 const promptTemplate = (locale: Locales) => `
   "Translate only the value of the key-value json file in input, the translated values must match ${locale} locale, then return the JSON\n";`;
 
-export const translate = ({ apiKey }: { apiKey: string | undefined }) => {
+export const translate = async () => {
+  const { OPENAI_KEY: apiKey } = await getConfig();
   const OPENAI_KEY =
     process.env.OPENAI_KEY ?? process.env.OPENAI_API_KEY ?? apiKey;
 
   if (!OPENAI_KEY) {
-    console.log(OPENAI_KEY);
     throw new Error(
       "No OpenAI API Key found. Please set the OPENAI_KEY environment variable."
     );

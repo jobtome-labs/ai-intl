@@ -39,9 +39,6 @@ export default command(
           );
         }
 
-        console.log(symlinkPath);
-        console.log(hookPath);
-
         await fs.mkdir(path.dirname(symlinkPath), { recursive: true });
         await fs.symlink(hookPath, symlinkPath, "file");
         await fs.chmod(symlinkPath, 0o755);

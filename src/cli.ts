@@ -1,7 +1,8 @@
 import { cli } from "cleye";
 import { description, version } from "../package.json";
 import hookCommand, { isCalledFromGitHook } from "./commands/hook.js";
-import { translate } from "./commands/translate.js";
+import configCommand from "./commands/config.js";
+import { translate } from "./utils/translate.js";
 
 const rawArgv = process.argv.slice(2);
 
@@ -17,7 +18,7 @@ const response = cli(
       },
     },
 
-    commands: [hookCommand],
+    commands: [configCommand, hookCommand],
 
     help: {
       description,
@@ -25,11 +26,9 @@ const response = cli(
   },
   (argv) => {
     if (isCalledFromGitHook) {
-      console.log("This is called from github hook");
+      translate();
     } else {
-      // translate({
-      //   apiKey: argv.flags.apiKey,
-      // });
+      translate();
     }
   },
   rawArgv
