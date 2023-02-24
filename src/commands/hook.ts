@@ -6,7 +6,7 @@ import { command } from "cleye";
 import { assertGitRepo } from "../utils/git.js";
 import { fileExists } from "../utils/fs.js";
 
-const hookName = "prepare-commit-msg";
+const hookName = "pre-commit";
 const symlinkPath = `.git/hooks/${hookName}`;
 
 export const isCalledFromGitHook = process.argv[1].endsWith(`/${symlinkPath}`);
