@@ -1,0 +1,15 @@
+{
+  "nonTrovato": {
+    "titolo": "404 Ooops!",
+    "descrizione.spiegazione": "È un po' imbarazzante...",
+    "descrizione.prova": "Non riusciamo a trovare la pagina che stai cercando, ma puoi provare:",
+    "cta": "Trova un lavoro",
+    "altText": "404 Ooops!"
+  },
+  "paginaErrore": {
+    "titolo": "Ooops!",
+    "descrizione": "È verificato un errore e stiamo facendo del nostro meglio per risolverlo il prima possibile, puoi provare a ricaricare questa pagina o forse:",
+    "altText": "Ooops!",
+    "cta": "Trova un lavoro"
+  }
+}

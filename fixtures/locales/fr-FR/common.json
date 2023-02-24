@@ -1,0 +1,19 @@
+{
+  "searchForm": {
+    "keyword": "Profession, Entreprise, Mot clé",
+    "location": "Ville, État, Code postal",
+    "what": "Quoi",
+    "where": "Où",
+    "errorMessage": "Vous devez insérer un mot ou un emplacement pour lancer une recherche",
+    "noOptions": "Aucune option à afficher",
+    "searchJobs": "Rechercher des offres d'emploi",
+    "findJobs": "Trouver un emploi",
+    "editSearch": "Modifier la recherche",
+    "searchSummary": "{{ jobSearch }} dans {{ location }}",
+    "positionOnlySearchSummary": "{{ jobSearch }}",
+    "locationOnlySearchSummary": "Offres d'emploi dans {{ jobSearch }}",
+    "positionOnlySearchSummary_ca": "{{ jobSearch }} au Canada",
+    "emptySearchSummary": "Offres d'emploi au Royaume-Uni",
+    "emptySearchSummary_ca": "Offres d'emploi au Canada"
+  }
+}

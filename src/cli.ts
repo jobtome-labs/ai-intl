@@ -4,9 +4,7 @@ import hookCommand, { isCalledFromGitHook } from "./commands/hook.js";
 import configCommand from "./commands/config.js";
 import { translate } from "./utils/translate.js";
 
-const rawArgv = process.argv.slice(2);
-
-const response = cli(
+cli(
   {
     name: "ai-intl",
     version,
@@ -30,6 +28,5 @@ const response = cli(
     } else {
       translate();
     }
-  },
-  rawArgv
+  }
 );

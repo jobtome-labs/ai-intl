@@ -4,6 +4,7 @@ import fsExtra from "fs-extra";
 import { Configuration, OpenAIApi } from "openai";
 const { outputJson } = fsExtra;
 import { getConfig } from "../utils/config.js";
+import { getStagedDiff } from "./git.js";
 
 const sanitizeMessage = (message: string) =>
   message
@@ -21,6 +22,14 @@ const promptTemplate = (locale: Locales) => `
   "Translate only the value of the key-value json file in input, the translated values must match ${locale} locale, then return the JSON\n";`;
 
 export const translate = async () => {
+  const stagedDiff = await getStagedDiff();
+
+  if (!stagedDiff) {
+    return;
+  }
+
+  console.log(stagedDiff);
+
   const { OPENAI_KEY: apiKey } = await getConfig();
   const OPENAI_KEY =
     process.env.OPENAI_KEY ?? process.env.OPENAI_API_KEY ?? apiKey;
