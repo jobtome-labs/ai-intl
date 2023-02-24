@@ -14,39 +14,38 @@ const sanitizeMessage = (message: string) =>
     .replace(/[\n\r]/g, "")
     .replace(/(\w)\.$/, "$1");
 
-enum Locales {
-  itIT = "it-IT",
-}
-
-const promptTemplate = (locale: Locales) => `
+const promptTemplate = (locale: string) => `
   "Translate only the value of the key-value json file in input, the translated values must match ${locale} locale, then return the JSON\n";`;
 
-export const translate = async () => {
-  const stagedDiff = await getStagedDiff();
+type TranslateProps = {
+  files?: string[];
+  defaultLocale: string;
+  locales: string[];
+  translationsPath: string;
+};
 
+export const translate = async ({
+  files,
+  defaultLocale,
+  locales,
+}: TranslateProps) => {
   const { OPENAI_KEY: apiKey } = await getConfig();
   const OPENAI_KEY =
     process.env.OPENAI_KEY ?? process.env.OPENAI_API_KEY ?? apiKey;
 
-  if (!OPENAI_KEY) {
-    throw new Error(
-      "No OpenAI API Key found. Please set the OPENAI_KEY environment variable."
-    );
-  }
-
   const openai = new OpenAIApi(new Configuration({ apiKey: OPENAI_KEY }));
 
-  if (!stagedDiff) {
+  if (!files) {
     return;
   }
 
   const translations = await task.group(
     (task) =>
-      Object.values(Locales).map((locale) =>
+      locales.map((locale) =>
         task(`Translating ${locale}`, async ({ task: nestedTask }) => {
           return nestedTask.group(
             (openAiTask) =>
-              stagedDiff?.files.map((file) =>
+              files.map((file) =>
                 openAiTask(
                   `Translating ${file.split("/").pop()}`,
                   async ({ setTitle, setStatus }) => {
@@ -81,9 +80,13 @@ export const translate = async () => {
                         completion.data.choices[0].text ?? "{}"
                       );
 
-                      await outputJson(file.replace("en-US", locale), json, {
-                        spaces: 2,
-                      });
+                      await outputJson(
+                        file.replace(defaultLocale, locale),
+                        json,
+                        {
+                          spaces: 2,
+                        }
+                      );
 
                       setTitle(
                         `Successfully received translation for ${fileName}...`

@@ -9,6 +9,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+ai-intl.config.js
+
 # Dependency directories
 /node_modules/
 
