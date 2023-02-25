@@ -1,0 +1,20 @@
+{
+  "searchForm": {
+    "keyword": "Profesión, Empresa, Palabra clave",
+    "location": "Ciudad, Estado, Código postal",
+    "what": "Qué",
+    "where": "Dónde",
+    "errorMessage": "Necesitas insertar una palabra o una ubicación para iniciar una búsqueda",
+    "noOptions": "No hay opciones para mostrar",
+    "searchJobs": "Buscar trabajos",
+    "findJobs": "Encuentra un trabajo",
+    "editSearch": "Editar búsqueda",
+    "searchSummary": "{{ jobSearch }} en {{ location }}",
+    "positionOnlySearchSummary": "{{ jobSearch }}",
+    "locationOnlySearchSummary": "Trabajos en {{ jobSearch }}",
+    "positionOnlySearchSummary_ca": "{{ jobSearch }} en Canadá",
+    "emptySearchSummary": "Trabajos en Reino Unido",
+    "emptySearchSummary_ca": "Trabajos en Canadá",
+    "test": "nuevo"
+  }
+}

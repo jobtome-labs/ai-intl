@@ -1,10 +1,19 @@
 import glob from "glob";
-import { getConfig } from "../utils/config.js";
 import { command } from "cleye";
-import { readConfigFile } from "../utils/fs.js";
+import { fileExists, readConfigFile } from "../utils/fs.js";
 import { Config } from "../cli.js";
-import { translate } from "../utils/translate.js";
 import { aiIntlFileName } from "../costants/aiFileName.js";
+import { validateAllKeysMatch } from "../utils/diff.js";
+import { loadJson } from "../utils/fs.js";
+import { multiselect, intro, outro } from "@clack/prompts";
+import { green } from "kolorist";
+import task from "tasuku";
+import { translateIndividual } from "../utils/translateIndividial.js";
+
+type StrcutMissingTranslations = {
+  file: string;
+  locale: string;
+};
 
 export default command(
   {
@@ -16,18 +25,87 @@ export default command(
       aiIntlFileName
     )) as Config;
 
-    const { OPENAI_KEY: apiKey } = await getConfig();
-    const OPENAI_KEY =
-      process.env.OPENAI_KEY ?? process.env.OPENAI_API_KEY ?? apiKey;
+    const files = glob.sync(`${translationsPath}/${defaultLocale}/*.json`);
 
-    if (!OPENAI_KEY) {
-      throw new Error(
-        "No OpenAI API Key found. Please set the OPENAI_KEY environment variable."
-      );
+    const missingTranslations = [] as StrcutMissingTranslations[];
+
+    for (const file of files) {
+      for (const locale of locales) {
+        const localeFile = file.replace(defaultLocale, locale);
+        const doesTranslationForLocaleFileExists = await fileExists(localeFile);
+
+        if (doesTranslationForLocaleFileExists) {
+          const originalJson = loadJson(file);
+          const translatedJson = loadJson(localeFile);
+
+          const isMatching = validateAllKeysMatch({
+            originalJson,
+            generatedJson: translatedJson,
+          });
+
+          if (!isMatching) {
+            missingTranslations.push({
+              file,
+              locale,
+            });
+          }
+        } else {
+          missingTranslations.push({
+            file,
+            locale,
+          });
+        }
+      }
     }
 
-    const files = glob.sync(`**/${translationsPath}/${defaultLocale}/*.json`);
+    if (missingTranslations.length === 0) {
+      console.log(green("✔"), "Your translations are up to date");
+      return;
+    }
 
-    return translate({ files, defaultLocale, locales, translationsPath });
+    intro("Missing translations found");
+
+    const missingTranslationsToGenerate = (await multiselect({
+      message: "Select missing translations you want to generate",
+      initialValues: [],
+      options: missingTranslations.map((missingTranslation) => ({
+        label:
+          `${missingTranslation.file} for ${missingTranslation.locale}` as string,
+        value:
+          `${missingTranslation.file}___${missingTranslation.locale}` as string,
+      })),
+    })) as string[];
+
+    const filesToTranslate = missingTranslationsToGenerate.map(
+      (missingTranslation) => {
+        const [file, locale] = missingTranslation.split("___");
+        return {
+          file,
+          locale,
+        };
+      }
+    );
+
+    outro("Thanks we are generating translations for you");
+
+    return await task.group(
+      (task) =>
+        filesToTranslate.map(({ file, locale }) =>
+          task(
+            `Translating ${file} to ${locale}`,
+            async ({ task: nestedTask }) => {
+              return translateIndividual({
+                file,
+                locale,
+                defaultLocale,
+                task: nestedTask,
+              });
+            }
+          )
+        ),
+      {
+        concurrency: 5,
+      }
+    );
   }
 );

@@ -1,0 +1,15 @@
+{
+  "notFound": {
+    "title": "404 Ooops!",
+    "description.explanation": "Che imbarazzo...",
+    "description.try": "Non riusciamo a trovare la pagina che stai cercando, ma puoi provare:",
+    "cta": "Trova un lavoro",
+    "altText": "404 Ooops!"
+  },
+  "errorPage": {
+    "title": "Ooops!",
+    "description": "Si è verificato un errore e stiamo facendo del nostro meglio per risolverlo il prima possibile, puoi provare a ricaricare questa pagina o forse:",
+    "altText": "Ooops!",
+    "cta": "Trova un lavoro"
+  }
+}

@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import { createRequire } from "node:module";
 import path from "path";
 
 // lstat is used because this is also used to check if a symlink file exists
@@ -17,4 +18,9 @@ export const readConfigFile = async (filePath: string) => {
   }
 
   return await import(path.resolve(filePath)).then((module) => module.default);
+};
+
+export const loadJson = (filePath: string) => {
+  const require = createRequire(import.meta.url);
+  return require(path.resolve(filePath));
 };

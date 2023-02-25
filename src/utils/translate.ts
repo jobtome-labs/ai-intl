@@ -2,10 +2,10 @@ import task from "tasuku";
 import fsExtra from "fs-extra";
 import { Configuration, OpenAIApi } from "openai";
 import { getConfig } from "../utils/config.js";
-import { getStagedDiff } from "./git.js";
 import path from "path";
 import { execa } from "execa";
 import { isCalledFromGitHook } from "../commands/hook.js";
+import { validateAllKeysMatch } from "./diff.js";
 
 const { outputJson } = fsExtra;
 
@@ -16,7 +16,7 @@ const sanitizeMessage = (message: string) =>
     .replace(/(\w)\.$/, "$1");
 
 const promptTemplate = (locale: string) => `
-  "Translate only the value of the key-value json file in input, the translated values must match ${locale} locale, then return the JSON\n";`;
+  "Translate only the value of the key-value json file in input, the translated values must match ${locale} locale, keep the same key of the json without translating it, then return the JSON\n";`;
 
 type TranslateProps = {
   files?: string[];
@@ -60,7 +60,7 @@ export const translate = async ({
                     // Accounting for GPT-3's input req of 4k tokens (approx 8k chars)
                     if (prompt.length > 8000) {
                       throw new Error(
-                        "The diff is too large for the OpenAI API. Try reducing the number of staged changes, or write your own commit message."
+                        "The translations file is too large for the OpenAI API."
                       );
                     }
 
@@ -69,7 +69,7 @@ export const translate = async ({
                       const completion = await openai.createCompletion({
                         model: "text-davinci-003",
                         prompt,
-                        temperature: 0.7,
+                        temperature: 0.2,
                         top_p: 1,
                         frequency_penalty: 0,
                         presence_penalty: 0,
@@ -77,13 +77,24 @@ export const translate = async ({
                         stream: false,
                       });
 
-                      const json = JSON.parse(
+                      const generatedJson = JSON.parse(
                         completion.data.choices[0].text ?? "{}"
-                      );
+                      ) as JSON;
+
+                      const isMatching = validateAllKeysMatch({
+                        generatedJson,
+                        originalJson: content,
+                      });
+
+                      if (!isMatching) {
+                        throw new Error(
+                          `The generated translation for ${fileName} doesn't match the original one.`
+                        );
+                      }
 
                       await outputJson(
                         file.replace(defaultLocale, locale),
-                        json,
+                        generatedJson,
                         {
                           spaces: 2,
                         }
