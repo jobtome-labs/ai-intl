@@ -13,12 +13,19 @@
   "scripts": {
     "build": "pkgroll --minify",
     "dev": "pkgroll --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "publish-packages": "pnpm build && changeset version && changeset publish"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "i18n",
+    "translation",
+    "ai",
+    "openai",
+    "git",
+    "cli",
+    "command-line"
+  ],
+  "author": "Erik Olivero @ekolivero",
+  "license": "MIT",
   "devDependencies": {
     "@types/json-diff": "^0.9.1",
     "@types/node": "^18.14.1",
