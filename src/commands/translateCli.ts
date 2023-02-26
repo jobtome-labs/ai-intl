@@ -5,7 +5,7 @@ import { aiIntlFileName } from "../costants/aiFileName.js";
 import { multiselect, intro, outro } from "@clack/prompts";
 import { green } from "kolorist";
 import task from "tasuku";
-import { translateIndividual } from "../utils/translate.js";
+import { translate } from "../utils/translate.js";
 
 export default command(
   {
@@ -52,7 +52,7 @@ export default command(
           task(
             `Translating ${file} to ${locale}`,
             async ({ task: nestedTask }) => {
-              return translateIndividual({
+              return translate({
                 file,
                 locale,
                 defaultLocale,

@@ -8,8 +8,9 @@ import { readConfigFile } from "./utils/fs.js";
 import { getStagedDiff } from "./utils/git.js";
 import { aiIntlFileName } from "./costants/aiFileName.js";
 import task from "tasuku";
-import { translateIndividual } from "./utils/translate.js";
+import { translate } from "./utils/translate.js";
 import { green } from "kolorist";
+import { execa } from "execa";
 
 type StrcutMissingTranslations = {
   file: string;
@@ -68,13 +69,13 @@ cli(
       }
     }
 
-    return await task.group(
+    const translationTasks = await task.group(
       (task) =>
         missingTranslationsToGenerate.map(({ file, locale }) =>
           task(
             `Translating ${file} to ${locale}`,
             async ({ task: nestedTask }) => {
-              return translateIndividual({
+              return translate({
                 file,
                 locale,
                 defaultLocale,
@@ -87,5 +88,9 @@ cli(
         concurrency: 5,
       }
     );
+
+    Promise.allSettled(translationTasks).then(() => {
+      execa("git", ["add", "."]);
+    });
   }
 );
