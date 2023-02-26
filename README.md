@@ -35,7 +35,7 @@
    ai-intl generate
    ```
 
-   ![ai-intl generate cli](.github/ai-intl-generate.png "ai-intl generate cli")
+   ![ai-intl generate cli](.github/cli-demo.gif "ai-intl generate cli")
 
 5. You can now open _ai-intl.config.json_ and personalize your translations.
 
