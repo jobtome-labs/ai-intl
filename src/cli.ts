@@ -1,6 +1,6 @@
 import { cli } from "cleye";
 import { description, version } from "../package.json";
-import hookCommand from "./commands/hook.js";
+import hookCommand, { isCalledFromGitHook } from "./commands/hook.js";
 import configCommand from "./commands/config.js";
 import translateCli from "./commands/translateCli.js";
 import generateCommand from "./commands/generate.js";
@@ -89,8 +89,10 @@ cli(
       }
     );
 
-    Promise.allSettled(translationTasks).then(() => {
-      execa("git", ["add", "."]);
-    });
+    if (isCalledFromGitHook) {
+      Promise.allSettled(translationTasks).then(() => {
+        execa("git", ["add", "."]);
+      });
+    }
   }
 );
