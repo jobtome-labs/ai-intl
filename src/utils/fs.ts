@@ -26,7 +26,7 @@ export const readConfigFile = async (filePath: string) => {
     );
   }
 
-  return await import(path.resolve(filePath)).then((module) => module.default);
+  return loadJson(filePath);
 };
 
 export const loadJson = (filePath: string) => {

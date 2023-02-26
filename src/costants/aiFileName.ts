@@ -1,1 +1,1 @@
-export const aiIntlFileName = "ai-intl.config.js";
+export const aiIntlFileName = "ai-intl.config.json";
