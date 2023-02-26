@@ -6,14 +6,12 @@ specifiers:
   '@types/fs-extra': ^11.0.1
   '@types/glob': ^8.1.0
   '@types/ini': ^1.3.31
-  '@types/json-diff': ^0.9.1
   '@types/node': ^18.14.1
   cleye: ^1.3.2
   execa: ^7.0.0
   fs-extra: ^11.1.0
   glob: ^8.1.0
   ini: ^3.0.1
-  json-diff: ^1.0.3
   kolorist: ^1.7.0
   openai: ^3.1.0
   pkgroll: ^1.9.0
@@ -31,13 +29,11 @@ dependencies:
   fs-extra: 11.1.0
   glob: 8.1.0
   ini: 3.0.1
-  json-diff: 1.0.3
   kolorist: 1.7.0
   openai: 3.1.0
   tasuku: 2.0.1
 
 devDependencies:
-  '@types/json-diff': 0.9.1
   '@types/node': 18.14.1
   pkgroll: 1.9.0_typescript@4.9.5
   typescript: 4.9.5
@@ -471,12 +467,6 @@ packages:
     dev: true
     optional: true
 
-  /@ewoudenberg/difflib/0.1.0:
-    resolution: {integrity: sha512-OU5P5mJyD3OoWYMWY+yIgwvgNS9cFAU10f+DDuvtogcWQOoJIsQ4Hy2McSfUfhKjq8L0FuWVb4Rt7kgA+XK86A==}
-    dependencies:
-      heap: 0.2.7
-    dev: false
-
   /@jridgewell/sourcemap-codec/1.4.14:
     resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
     dev: true
@@ -655,10 +645,6 @@ packages:
     dependencies:
       ci-info: 3.8.0
     dev: false
-
-  /@types/json-diff/0.9.1:
-    resolution: {integrity: sha512-SrwOKMaKa9rmYayzG6N1T2PsqybHJ9dSOzhzZFlI5XORDWwaltgjVz7UIa3OeE5zVkHw65niV2son7PdaZrElQ==}
-    dev: true
 
   /@types/jsonfile/6.1.1:
     resolution: {integrity: sha512-GSgiRCVeapDN+3pqA35IkQwasaCh/0YFH5dEF6S88iDvEn901DjOeH3/QPY+XYP1DFzDZPvIvfeEgk+7br5png==}
@@ -894,11 +880,6 @@ packages:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
     dev: false
 
-  /colors/1.4.0:
-    resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
-    engines: {node: '>=0.1.90'}
-    dev: false
-
   /combined-stream/1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
@@ -996,13 +977,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-type: 4.0.0
-    dev: false
-
-  /dreamopt/0.8.0:
-    resolution: {integrity: sha512-vyJTp8+mC+G+5dfgsY+r3ckxlz+QMX40VjPQsZc5gxVAxLmi64TBoVkP54A/pRAXMXsbu2GMMBrZPxNv23waMg==}
-    engines: {node: '>=0.4.0'}
-    dependencies:
-      wordwrap: 1.0.0
     dev: false
 
   /emoji-regex/8.0.0:
@@ -1414,10 +1388,6 @@ packages:
     dependencies:
       function-bind: 1.1.1
 
-  /heap/0.2.7:
-    resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==}
-    dev: false
-
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: false
@@ -1653,15 +1623,6 @@ packages:
     dependencies:
       argparse: 1.0.10
       esprima: 4.0.1
-    dev: false
-
-  /json-diff/1.0.3:
-    resolution: {integrity: sha512-W0yk/xzjz7bag9v9eS4qthvPG4O07uxNeXwirhvcOqmX4w8HLtB/Pw76o5Z7Pblwvf4vpCi4+iHOlHDnmav/rA==}
-    hasBin: true
-    dependencies:
-      '@ewoudenberg/difflib': 0.1.0
-      colors: 1.4.0
-      dreamopt: 0.8.0
     dev: false
 
   /json-parse-even-better-errors/2.3.1:
@@ -2490,10 +2451,6 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
-    dev: false
-
-  /wordwrap/1.0.0:
-    resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==}
     dev: false
 
   /wrap-ansi/6.2.0:
