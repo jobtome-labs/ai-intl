@@ -65,3 +65,7 @@ Once you have finished your development, you no longer have to worry about trans
 ### Maintainers
 
 - **Erik Olivero**: [@ekolivero](https://github.com/erik18xk)
+
+### Thanks
+
+- This project was inspired by [ai-commits](https://github.com/Nutlope/aicommits)
