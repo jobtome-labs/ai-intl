@@ -8,7 +8,7 @@ export default command(
     name: "generate",
   },
   async () => {
-    if (existsSync("ai-intl.config.js")) {
+    if (existsSync("ai-intl.config.json")) {
       console.log(green("✔"), "   Config file already exists");
       console.log("😆   You can edit it manually");
       return;
@@ -54,15 +54,15 @@ export default command(
       required: false,
     });
 
-    const config = `export default {
-    translationsPath: "${String(translationsPath)}",
-    defaultLocale: "${String(defaultLocale)}",
-    locales: ${JSON.stringify(locales)}\n}`;
+    const config = `{
+    "translationsPath": "${String(translationsPath)}",
+    "defaultLocale": "${String(defaultLocale)}",
+    "locales": ${JSON.stringify(locales)}\n}`;
 
     const s = spinner();
 
     s.start("Generating config file");
-    fs.writeFileSync("ai-intl.config.js", config);
+    fs.writeFileSync("ai-intl.config.json", config);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     s.stop();
 
