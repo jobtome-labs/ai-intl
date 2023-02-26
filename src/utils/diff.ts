@@ -1,4 +1,4 @@
-import { diffString } from "json-diff";
+import { diff, diffString } from "json-diff";
 
 type DiffStruct = {
   generatedJson: JSON;
@@ -16,4 +16,11 @@ export function validateAllKeysMatch({
     return true;
   }
   return false;
+}
+
+export function getDiff({ generatedJson, originalJson }: DiffStruct) {
+  return diff(generatedJson, originalJson, {
+    keysOnly: true,
+    outputNewOnly: true,
+  });
 }
