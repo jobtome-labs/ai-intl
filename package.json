@@ -15,7 +15,7 @@
     "cli",
     "command-line"
   ],
-  "author": "Erik Olivero @ekolivero",
+  "author": "Erik Olivero <@ekolivero> (https://github.com/ekolivero)",
   "license": "MIT",
   "repository": "jobtome-labs/ai-intl",
   "files": [
