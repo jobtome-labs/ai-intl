@@ -60,7 +60,7 @@ Say goodbye to the complexities of internationalization with our AI-powered CLI 
 
 Once you have finished your development, you no longer have to worry about translating the content. AI will take care of it for you.
 
-### A [jobtome-project](https://us.p3.jobtome.com/)
+### A [jobtome](https://us.p3.jobtome.com/) project
 
 ### Maintainers
 
