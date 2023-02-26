@@ -1,5 +1,15 @@
 import fs from "fs/promises";
+import glob from "glob";
+import { createRequire } from "node:module";
 import path from "path";
+import { Config } from "../cli.js";
+import { aiIntlFileName } from "../costants/aiFileName.js";
+import { validateAllKeysMatch } from "./diff.js";
+
+type StrcutMissingTranslations = {
+  file: string;
+  locale: string;
+};
 
 // lstat is used because this is also used to check if a symlink file exists
 export const fileExists = (filePath: string) =>
@@ -17,4 +27,54 @@ export const readConfigFile = async (filePath: string) => {
   }
 
   return await import(path.resolve(filePath)).then((module) => module.default);
+};
+
+export const loadJson = (filePath: string) => {
+  const require = createRequire(import.meta.url);
+  return require(path.resolve(filePath));
+};
+
+export const findNewTranslationsFile = async () => {
+  const { defaultLocale, locales, translationsPath } = (await readConfigFile(
+    aiIntlFileName
+  )) as Config;
+
+  const files = glob.sync(`${translationsPath}/${defaultLocale}/*.json`);
+
+  const missingTranslations = [] as StrcutMissingTranslations[];
+
+  for (const file of files) {
+    for (const locale of locales) {
+      const localeFile = file.replace(defaultLocale, locale);
+      const doesTranslationForLocaleFileExists = await fileExists(localeFile);
+
+      if (doesTranslationForLocaleFileExists) {
+        const originalJson = loadJson(file);
+        const translatedJson = loadJson(localeFile);
+
+        const isMatching = validateAllKeysMatch({
+          originalJson,
+          generatedJson: translatedJson,
+        });
+
+        if (!isMatching) {
+          missingTranslations.push({
+            file,
+            locale,
+          });
+        }
+      } else {
+        missingTranslations.push({
+          file,
+          locale,
+        });
+      }
+    }
+  }
+
+  if (missingTranslations.length === 0) {
+    return [];
+  }
+
+  return missingTranslations;
 };

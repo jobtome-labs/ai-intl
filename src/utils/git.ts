@@ -18,11 +18,14 @@ const excludeFromDiff = [
   "pnpm-lock.yaml",
 ].map((file) => `:(exclude)${file}`);
 
-export const getStagedDiff = async (defaultLocale: string) => {
-  const diffCached = ["diff", "--cached"];
+export const getStagedDiff = async (translationsPath: string) => {
+  // const diffCached = ["diff", "--cached"];
+  const diffCached = ["diff"];
+  const diffPath = ["--", translationsPath];
   const { stdout: files } = await execa("git", [
     ...diffCached,
     "--name-only",
+    ...diffPath,
     ...excludeFromDiff,
   ]);
 
@@ -32,13 +35,12 @@ export const getStagedDiff = async (defaultLocale: string) => {
 
   const { stdout: diff } = await execa("git", [
     ...diffCached,
+    ...diffPath,
     ...excludeFromDiff,
   ]);
 
   return {
-    files: files
-      .split("\n")
-      .filter((name) => name.includes(".json") && name.includes(defaultLocale)),
+    files: files.split("\n"),
     diff,
   };
 };

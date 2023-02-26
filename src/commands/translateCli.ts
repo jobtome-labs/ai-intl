@@ -1,10 +1,11 @@
-import glob from "glob";
-import { getConfig } from "../utils/config.js";
 import { command } from "cleye";
-import { readConfigFile } from "../utils/fs.js";
+import { findNewTranslationsFile, readConfigFile } from "../utils/fs.js";
 import { Config } from "../cli.js";
-import { translate } from "../utils/translate.js";
 import { aiIntlFileName } from "../costants/aiFileName.js";
+import { multiselect, intro, outro } from "@clack/prompts";
+import { green } from "kolorist";
+import task from "tasuku";
+import { translateIndividual } from "../utils/translate.js";
 
 export default command(
   {
@@ -12,22 +13,57 @@ export default command(
     parameters: [],
   },
   async (argv) => {
-    const { defaultLocale, locales, translationsPath } = (await readConfigFile(
-      aiIntlFileName
-    )) as Config;
+    const { defaultLocale } = (await readConfigFile(aiIntlFileName)) as Config;
+    const missingTranslations = await findNewTranslationsFile();
 
-    const { OPENAI_KEY: apiKey } = await getConfig();
-    const OPENAI_KEY =
-      process.env.OPENAI_KEY ?? process.env.OPENAI_API_KEY ?? apiKey;
-
-    if (!OPENAI_KEY) {
-      throw new Error(
-        "No OpenAI API Key found. Please set the OPENAI_KEY environment variable."
-      );
+    if (missingTranslations.length === 0) {
+      console.log(green("✔"), "Your translations are up to date");
+      return;
     }
 
-    const files = glob.sync(`**/${translationsPath}/${defaultLocale}/*.json`);
+    intro("Missing translations found");
 
-    return translate({ files, defaultLocale, locales, translationsPath });
+    const missingTranslationsToGenerate = (await multiselect({
+      message: "Select missing translations you want to generate",
+      initialValues: [],
+      options: missingTranslations.map((missingTranslation) => ({
+        label:
+          `${missingTranslation.file} for ${missingTranslation.locale}` as string,
+        value:
+          `${missingTranslation.file}___${missingTranslation.locale}` as string,
+      })),
+    })) as string[];
+
+    const filesToTranslate = missingTranslationsToGenerate.map(
+      (missingTranslation) => {
+        const [file, locale] = missingTranslation.split("___");
+        return {
+          file,
+          locale,
+        };
+      }
+    );
+
+    outro("Thanks we are generating translations for you");
+
+    return await task.group(
+      (task) =>
+        filesToTranslate.map(({ file, locale }) =>
+          task(
+            `Translating ${file} to ${locale}`,
+            async ({ task: nestedTask }) => {
+              return translateIndividual({
+                file,
+                locale,
+                defaultLocale,
+                task: nestedTask,
+              });
+            }
+          )
+        ),
+      {
+        concurrency: 5,
+      }
+    );
   }
 );
