@@ -6,15 +6,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "dist"
-  ],
-  "bin": "./dist/cli.mjs",
-  "scripts": {
-    "build": "pkgroll --minify",
-    "dev": "pkgroll --watch",
-    "publish-packages": "pnpm build && changeset version && changeset publish"
-  },
   "keywords": [
     "i18n",
     "translation",
@@ -26,6 +17,16 @@
   ],
   "author": "Erik Olivero @ekolivero",
   "license": "MIT",
+  "repository": "jobtome-labs/ai-intl",
+  "files": [
+    "dist"
+  ],
+  "bin": "./dist/cli.mjs",
+  "scripts": {
+    "build": "pkgroll --minify",
+    "dev": "pkgroll --watch",
+    "publish-packages": "pnpm build && changeset version && changeset publish"
+  },
   "devDependencies": {
     "@types/json-diff": "^0.9.1",
     "@types/node": "^18.14.1",
