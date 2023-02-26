@@ -14,7 +14,6 @@
     "locationOnlySearchSummary": "Jobs in {{ jobSearch }}",
     "positionOnlySearchSummary_ca": "{{ jobSearch }} in Canada",
     "emptySearchSummary": "Jobs in United Kingdom",
-    "emptySearchSummary_ca": "Jobs in Canada",
-    "test": "new"
+    "emptySearchSummary_ca": "Jobs in Canada"
   }
 }
