@@ -60,19 +60,6 @@ Say goodbye to the complexities of internationalization with our AI-powered CLI 
 
 Once you have finished your development, you no longer have to worry about translating the content. AI will take care of it for you.
 
-## Future tasks
-
-- Add support for conventional commits as a flag that users can enable
-- Add support for diffs greater than 200 lines by grabbing the diff per file, optional flag
-- Add ability to specify a commit message from inside aicommit if user doesn't like generated one
-- Solve latency issue (use a githook to asynchronously run gpt3 call on every git add, store the result in a temp file or in the .git folder). Put behind a flag
-- Use gpt-3-tokenizer instead of hard limit on characters as a more accurate model
-- Play around with prompt to produce optimal result
-- Add opt-in emoji flag to preface commits with an emoji, use [this](https://gitmoji.dev) as a guide
-- Add opt-in languages flag where it returns the commit in different languages
-- Add automated github releases using [this action](https://github.com/manovotny/github-releases-for-automated-package-publishing-action)
-- Build landing page for the 2.0 launch
-
 ### A [jobtome-project](https://us.p3.jobtome.com/)
 
 ### Maintainers
