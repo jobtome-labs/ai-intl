@@ -39,7 +39,14 @@ export const findNewTranslationsFile = async () => {
     aiIntlFileName
   )) as Config;
 
-  const files = glob.sync(`${translationsPath}/${defaultLocale}/*.json`);
+  const translationsFolder = glob.sync(
+    `${translationsPath}/${defaultLocale}/*.json`
+  );
+  const translationName = glob.sync(
+    `${translationsPath}/**/${defaultLocale}*.json`
+  );
+
+  const files = [...translationsFolder, ...translationName];
 
   const missingTranslations = [] as StrcutMissingTranslations[];
 
