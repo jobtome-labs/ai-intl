@@ -9,6 +9,7 @@ import { getStagedDiff } from "./utils/git.js";
 import { aiIntlFileName } from "./costants/aiFileName.js";
 import task from "tasuku";
 import { translate } from "./utils/translate.js";
+import login from "./commands/login.js";
 import { green } from "kolorist";
 import { execa } from "execa";
 
@@ -35,7 +36,13 @@ cli(
       },
     },
 
-    commands: [configCommand, hookCommand, translateCli, generateCommand],
+    commands: [
+      configCommand,
+      hookCommand,
+      translateCli,
+      generateCommand,
+      login,
+    ],
 
     help: {
       description,
