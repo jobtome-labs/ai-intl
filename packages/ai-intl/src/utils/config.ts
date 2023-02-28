@@ -18,6 +18,11 @@ const configParsers = {
 
     return key;
   },
+  ACCESS_TOKEN(key: string) {
+    parseAssert("ACCESS_TOKEN", key, "Cannot be empty");
+
+    return key;
+  },
   generate(key: string) {
     parseAssert("generate", key, "Cannot be empty");
     parseAssert("generate", /^\d+$/.test(key), "Must be an integer");
@@ -35,7 +40,7 @@ type ConfigType = {
   [key in ValidKeys]?: ReturnType<(typeof configParsers)[key]>;
 };
 
-const configPath = path.join(os.homedir(), ".aicommits");
+const configPath = path.join(os.homedir(), ".aiintl");
 
 export const getConfig = async (): Promise<ConfigType> => {
   const configExists = await fileExists(configPath);

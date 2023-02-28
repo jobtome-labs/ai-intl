@@ -6,6 +6,7 @@ import { multiselect, intro, outro } from "@clack/prompts";
 import { green } from "kolorist";
 import task from "tasuku";
 import { translate } from "../utils/translate.js";
+import { getConfig } from "../utils/config.js";
 
 export default command(
   {
@@ -13,6 +14,14 @@ export default command(
     parameters: [],
   },
   async (argv) => {
+    let { ACCESS_TOKEN } = await getConfig();
+    const response = await fetch("http://localhost:3000/api/auth/cli/login", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    });
+
     const { defaultLocale } = (await readConfigFile(aiIntlFileName)) as Config;
     const missingTranslations = await findNewTranslationsFile();
 
