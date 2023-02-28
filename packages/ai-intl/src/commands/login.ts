@@ -35,18 +35,6 @@ export default command(
       process.exit();
     });
 
-    // app.post("/auth", async function (req, res) {
-    //   fetch(`${aiIntlEndpoint}/api/auth/signin`, {
-
-    //   })
-    //   const { token } = req.body;
-    //   await setConfigs([["ACCESS_TOKEN", token]]);
-    //   res.status(200);
-    //   process.exit(0);
-    // });
-
-    const server = await app.listen(3100);
-
-    return;
+    await app.listen(3100);
   }
 );
