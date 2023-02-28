@@ -17,7 +17,7 @@ export default command(
   },
   async (argv) => {
     let { ACCESS_TOKEN } = await getConfig();
-    const response = await fetch(`${aiIntlEndpoint}/api/auth/cli/login`, {
+    const response = await fetch(`${aiIntlEndpoint}/`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${ACCESS_TOKEN}`,

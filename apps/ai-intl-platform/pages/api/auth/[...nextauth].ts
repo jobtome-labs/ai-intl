@@ -22,8 +22,14 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      session.accessToken = token.accessToken;
+      session.user.id = token.id;
+
+      return session;
+    },
     async redirect({ url, baseUrl }) {
-      console.log("url is", url);
       if (url) return url;
       return baseUrl;
     },

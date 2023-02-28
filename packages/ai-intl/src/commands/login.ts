@@ -29,6 +29,7 @@ export default command(
 
     app.get("/auth", async function (req, res) {
       const json = req.cookies;
+      console.log(json);
       const token = json["next-auth.session-token"];
       await setConfigs([["ACCESS_TOKEN", token]]);
       res.redirect(`${aiIntlEndpoint}/auth/success`);
