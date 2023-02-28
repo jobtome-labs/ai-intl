@@ -2,6 +2,9 @@ import { command } from "cleye";
 import open from "open";
 import express from "express";
 import { setConfigs } from "../utils/config.js";
+require("dotenv").config();
+
+const aiIntlEndpoint = process.env.AI_INTL_ENDPOINT ?? "http://localhost:3000";
 
 export default command(
   {
@@ -9,28 +12,20 @@ export default command(
   },
   async () => {
     const app = express();
+    app.use(express.json());
 
-    await open("https://ai-intl-ai-intl-platform.vercel.app/api/auth/signin", {
+    await open(`${aiIntlEndpoint}/api/auth/signin`, {
       wait: true,
       newInstance: true,
     });
 
-    app.get("/auth", async function (req, res) {
-      const token = await fetch(
-        "https://ai-intl-ai-intl-platform.vercel.app/api/auth/cli/login",
-        {
-          headers: {
-            cookie: req.headers.cookie ?? "",
-          },
-        }
-      );
-
-      const json = await token.json();
-      console.log(json);
-      await setConfigs([["ACCESS_TOKEN", json.token]]);
-      res.redirect("https://ai-intl-ai-intl-platform.vercel.app/auth/success");
+    app.post("/auth", async function (req, res) {
+      const { token } = req.body;
+      await setConfigs([["ACCESS_TOKEN", token]]);
+      res.status(200);
       process.exit(0);
     });
+
     const server = await app.listen(3100);
 
     return;

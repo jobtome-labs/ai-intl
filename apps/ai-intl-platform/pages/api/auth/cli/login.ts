@@ -6,5 +6,15 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const token = await getToken({ req, raw: true });
-  return res.status(200).json({ token });
+  try {
+    await fetch("http://localhost:3100/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: token }),
+    });
+  } catch (error) {
+    return res.redirect("/");
+  }
 }
