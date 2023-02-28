@@ -13,10 +13,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      console.log(url, baseUrl);
-      return "http://localhost:3100/auth";
-    },
     async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id;
