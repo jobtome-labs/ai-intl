@@ -11,7 +11,7 @@ export default command(
     const app = express();
 
     await open(
-      "https://ai-intl-platform-ai-intl-platform.vercel.app/api/auth/signin?redirect=cli",
+      "https://ai-intl-ai-intl-platform.vercel.app/api/auth/signin?callbackUrl=http://localhost:3100/auth",
       {
         wait: true,
         newInstance: true,
@@ -27,6 +27,7 @@ export default command(
           },
         }
       );
+
       const json = await token.json();
       await setConfigs([["ACCESS_TOKEN", json.token]]);
       res.redirect(
