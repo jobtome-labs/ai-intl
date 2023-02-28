@@ -10,20 +10,28 @@ export default command(
   async () => {
     const app = express();
 
-    await open("http://localhost:3000/api/auth/signin?redirect=cli", {
-      wait: true,
-      newInstance: true,
-    });
+    await open(
+      "https://ai-intl-platform-ai-intl-platform.vercel.app/api/auth/signin?redirect=cli",
+      {
+        wait: true,
+        newInstance: true,
+      }
+    );
 
     app.get("/auth", async function (req, res) {
-      const token = await fetch("http://localhost:3000/api/auth/cli/login", {
-        headers: {
-          cookie: req.headers.cookie ?? "",
-        },
-      });
+      const token = await fetch(
+        "https://ai-intl-platform-ai-intl-platform.vercel.app/api/auth/cli/login",
+        {
+          headers: {
+            cookie: req.headers.cookie ?? "",
+          },
+        }
+      );
       const json = await token.json();
       await setConfigs([["ACCESS_TOKEN", json.token]]);
-      res.redirect("http://localhost:3000/auth/success");
+      res.redirect(
+        "https://ai-intl-platform-ai-intl-platform.vercel.app/auth/success"
+      );
       process.exit(0);
     });
     const server = await app.listen(3100);
