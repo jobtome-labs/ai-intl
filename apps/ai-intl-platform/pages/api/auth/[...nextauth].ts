@@ -22,8 +22,9 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    redirect({ url, baseUrl }) {
-      return `${baseUrl}/api/auth/cli/login`;
+    async redirect({ url, baseUrl }) {
+      if (url) return url;
+      return baseUrl;
     },
   },
   session: {
