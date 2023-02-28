@@ -23,10 +23,9 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     redirect({ url, baseUrl }) {
-      console.log(url);
-      console.log(baseUrl);
-      console.log("Data");
-      return "http://localhost:3100/auth";
+      console.log("url", url);
+      console.log("baseUrl", baseUrl);
+      return url + "/api/auth/cli/login";
     },
   },
   session: {
