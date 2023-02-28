@@ -25,6 +25,7 @@ export const authOptions: NextAuthOptions = {
     redirect({ url, baseUrl }) {
       console.log(url);
       console.log(baseUrl);
+      console.log("Data");
       return "http://localhost:3100/auth";
     },
   },
