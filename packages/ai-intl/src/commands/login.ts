@@ -3,10 +3,10 @@ import open from "open";
 import express from "express";
 import { setConfigs } from "../utils/config.js";
 var cookieParser = require("cookie-parser");
-
 require("dotenv").config();
 
 const aiIntlEndpoint = process.env.ENDPOINT;
+
 export default command(
   {
     name: "login",

@@ -7,6 +7,7 @@ import { green } from "kolorist";
 import task from "tasuku";
 import { translate } from "../utils/translate.js";
 import { getConfig } from "../utils/config.js";
+require("dotenv").config();
 
 const aiIntlEndpoint = process.env.ENDPOINT ?? "http://localhost:3000";
 

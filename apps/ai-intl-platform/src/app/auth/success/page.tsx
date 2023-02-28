@@ -1,15 +1,7 @@
-"use client";
-import { useEffect } from "react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
-export default function Page() {
-  useEffect(() => {
-    window.close();
-  });
-
-  return (
-    <div>
-      <h1>Success</h1>
-      <p>You can close this window.</p>
-    </div>
-  );
+export default async function Page() {
+  const session = await getServerSession(authOptions);
+  return <pre>{JSON.stringify(session, null, 2)}</pre>;
 }
