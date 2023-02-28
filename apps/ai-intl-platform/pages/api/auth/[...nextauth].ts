@@ -22,6 +22,11 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
+    redirect({ url, baseUrl }) {
+      console.log(url);
+      console.log(baseUrl);
+      return "http://localhost:3100/auth";
+    },
   },
   session: {
     strategy: "jwt",
