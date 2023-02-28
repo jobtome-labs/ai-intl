@@ -1,9 +1,12 @@
 import { command } from "cleye";
 import open from "open";
 import express from "express";
+import { setConfigs } from "../utils/config.js";
+var cookieParser = require("cookie-parser");
+
 require("dotenv").config();
 
-const aiIntlEndpoint = process.env.ENVIRONMENT ?? "http://localhost:3000";
+const aiIntlEndpoint = "https://ai-intl-ai-intl-platform.vercel.app";
 export default command(
   {
     name: "login",
@@ -11,6 +14,7 @@ export default command(
   async () => {
     const app = express();
     app.use(express.json());
+    app.use(cookieParser());
 
     const url = `http://localhost:3100/auth`;
     await open(
@@ -24,7 +28,11 @@ export default command(
     );
 
     app.get("/auth", async function (req, res) {
-      console.log(req.headers.cookie);
+      const json = req.cookies;
+      const token = json["next-auth.session-token"];
+      await setConfigs([["ACCESS_TOKEN", token]]);
+      res.redirect(`${aiIntlEndpoint}/auth/success`);
+      process.exit();
     });
 
     // app.post("/auth", async function (req, res) {

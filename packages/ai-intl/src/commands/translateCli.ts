@@ -8,6 +8,8 @@ import task from "tasuku";
 import { translate } from "../utils/translate.js";
 import { getConfig } from "../utils/config.js";
 
+const aiIntlEndpoint = "https://ai-intl-ai-intl-platform.vercel.app";
+
 export default command(
   {
     name: "translate",
@@ -15,12 +17,17 @@ export default command(
   },
   async (argv) => {
     let { ACCESS_TOKEN } = await getConfig();
-    const response = await fetch("http://localhost:3000/api/auth/cli/login", {
+    const response = await fetch(`${aiIntlEndpoint}/api/auth/cli/login`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
     });
+
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
+
+    return;
 
     const { defaultLocale } = (await readConfigFile(aiIntlFileName)) as Config;
     const missingTranslations = await findNewTranslationsFile();
