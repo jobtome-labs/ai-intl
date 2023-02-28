@@ -8,7 +8,7 @@ import task from "tasuku";
 import { translate } from "../utils/translate.js";
 import { getConfig } from "../utils/config.js";
 
-const aiIntlEndpoint = "https://ai-intl-ai-intl-platform.vercel.app";
+const aiIntlEndpoint = process.env.ENDPOINT ?? "http://localhost:3000";
 
 export default command(
   {
@@ -17,7 +17,7 @@ export default command(
   },
   async (argv) => {
     let { ACCESS_TOKEN } = await getConfig();
-    const response = await fetch(`${aiIntlEndpoint}/`, {
+    const response = await fetch(`${aiIntlEndpoint}/api/auth/cli/login`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${ACCESS_TOKEN}`,

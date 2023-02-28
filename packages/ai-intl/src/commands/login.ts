@@ -6,7 +6,7 @@ var cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
-const aiIntlEndpoint = "https://ai-intl-ai-intl-platform.vercel.app";
+const aiIntlEndpoint = process.env.ENDPOINT;
 export default command(
   {
     name: "login",
@@ -29,7 +29,6 @@ export default command(
 
     app.get("/auth", async function (req, res) {
       const json = req.cookies;
-      console.log(json);
       const token = json["next-auth.session-token"];
       await setConfigs([["ACCESS_TOKEN", token]]);
       res.redirect(`${aiIntlEndpoint}/auth/success`);
